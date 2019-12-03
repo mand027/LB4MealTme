@@ -1,0 +1,11 @@
+{
+  "name": "mealtme_db",
+  "connector": "mongodb",
+  "url": "mongodb://lb4:asd123@ds251158.mlab.com:51158/mealtime_db",
+  "host": "ds251158.mlab.com",
+  "port": 51158,
+  "user": "lb4",
+  "password": "asd123",
+  "database": "mealtime_db",
+  "useNewUrlParser": true
+}
