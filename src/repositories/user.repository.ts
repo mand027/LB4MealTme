@@ -5,7 +5,7 @@ import {inject} from '@loopback/core';
 
 export class UserRepository extends DefaultCrudRepository<
   User,
-  typeof User.prototype.id,
+  typeof User.prototype.email,
   UserRelations
 > {
   constructor(

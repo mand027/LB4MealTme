@@ -17,20 +17,20 @@ import {
   del,
   requestBody,
 } from '@loopback/rest';
-import { User } from '../models';
-import { UserRepository } from '../repositories';
+import {User} from '../models';
+import {UserRepository} from '../repositories';
 
 export class UserController {
   constructor(
     @repository(UserRepository)
-    public userRepository: UserRepository,
-  ) { }
+    public userRepository : UserRepository,
+  ) {}
 
   @post('/users', {
     responses: {
       '200': {
         description: 'User model instance',
-        content: { 'application/json': { schema: getModelSchemaRef(User) } },
+        content: {'application/json': {schema: getModelSchemaRef(User)}},
       },
     },
   })
@@ -40,7 +40,7 @@ export class UserController {
         'application/json': {
           schema: getModelSchemaRef(User, {
             title: 'NewUser',
-
+            
           }),
         },
       },
@@ -54,7 +54,7 @@ export class UserController {
     responses: {
       '200': {
         description: 'User model count',
-        content: { 'application/json': { schema: CountSchema } },
+        content: {'application/json': {schema: CountSchema}},
       },
     },
   })
@@ -70,7 +70,10 @@ export class UserController {
         description: 'Array of User model instances',
         content: {
           'application/json': {
-            schema: { type: 'array', items: getModelSchemaRef(User) },
+            schema: {
+              type: 'array',
+              items: getModelSchemaRef(User, {includeRelations: true}),
+            },
           },
         },
       },
@@ -86,7 +89,7 @@ export class UserController {
     responses: {
       '200': {
         description: 'User PATCH success count',
-        content: { 'application/json': { schema: CountSchema } },
+        content: {'application/json': {schema: CountSchema}},
       },
     },
   })
@@ -94,7 +97,7 @@ export class UserController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(User, { partial: true }),
+          schema: getModelSchemaRef(User, {partial: true}),
         },
       },
     })
@@ -108,12 +111,19 @@ export class UserController {
     responses: {
       '200': {
         description: 'User model instance',
-        content: { 'application/json': { schema: getModelSchemaRef(User) } },
+        content: {
+          'application/json': {
+            schema: getModelSchemaRef(User, {includeRelations: true}),
+          },
+        },
       },
     },
   })
-  async findById(@param.path.number('id') id: number): Promise<User> {
-    return this.userRepository.findById(id);
+  async findById(
+    @param.path.string('id') id: string,
+    @param.query.object('filter', getFilterSchemaFor(User)) filter?: Filter<User>
+  ): Promise<User> {
+    return this.userRepository.findById(id, filter);
   }
 
   @patch('/users/{id}', {
@@ -124,11 +134,11 @@ export class UserController {
     },
   })
   async updateById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(User, { partial: true }),
+          schema: getModelSchemaRef(User, {partial: true}),
         },
       },
     })
@@ -145,13 +155,11 @@ export class UserController {
     },
   })
   async replaceById(
-    @param.path.number('id') id: number,
+    @param.path.string('id') id: string,
     @requestBody() user: User,
   ): Promise<void> {
     await this.userRepository.replaceById(id, user);
   }
-
-
 
   @del('/users/{id}', {
     responses: {
@@ -160,8 +168,7 @@ export class UserController {
       },
     },
   })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.userRepository.deleteById(id);
   }
 }
-
