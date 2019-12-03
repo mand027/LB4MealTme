@@ -46,6 +46,7 @@
     "!*/__tests__"
   ],
   "dependencies": {
+    "@loopback/authentication": "^3.2.3",
     "@loopback/boot": "^1.5.11",
     "@loopback/context": "^1.23.5",
     "@loopback/core": "^1.10.7",
@@ -58,16 +59,16 @@
   },
   "devDependencies": {
     "@loopback/build": "^2.0.16",
-    "source-map-support": "^0.5.16",
+    "@loopback/eslint-config": "^4.1.4",
     "@loopback/testlab": "^1.9.4",
     "@types/node": "^10.17.5",
-    "@typescript-eslint/parser": "^2.7.0",
     "@typescript-eslint/eslint-plugin": "^2.7.0",
-    "@loopback/eslint-config": "^4.1.4",
+    "@typescript-eslint/parser": "^2.7.0",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-eslint-plugin": "^2.1.0",
     "eslint-plugin-mocha": "^6.2.1",
+    "source-map-support": "^0.5.16",
     "typescript": "~3.7.2"
   }
 }
