@@ -21,7 +21,7 @@ import { Receta } from '../models';
 import { RecetaRepository } from '../repositories';
 import { GeocoderService } from '../services';
 import { inject } from '@loopback/core';
-
+// good comment
 export class RecetasController {
   constructor(
     @repository(RecetaRepository)
