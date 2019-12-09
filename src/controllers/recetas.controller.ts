@@ -17,20 +17,23 @@ import {
   del,
   requestBody,
 } from '@loopback/rest';
-import {Receta} from '../models';
-import {RecetaRepository} from '../repositories';
+import { Receta } from '../models';
+import { RecetaRepository } from '../repositories';
+import { GeocoderService } from '../services';
+import { inject } from '@loopback/core';
 
 export class RecetasController {
   constructor(
     @repository(RecetaRepository)
-    public recetaRepository : RecetaRepository,
-  ) {}
+    public recetaRepository: RecetaRepository,
+    @inject('services.GeocoderService') protected geoService: GeocoderService,
+  ) { }
 
   @post('/recetas', {
     responses: {
       '200': {
         description: 'Receta model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Receta)}},
+        content: { 'application/json': { schema: getModelSchemaRef(Receta) } },
       },
     },
   })
@@ -47,6 +50,14 @@ export class RecetasController {
     })
     receta: Omit<Receta, 'id'>,
   ): Promise<Receta> {
+    if (receta.remindAtAddress) {
+      console.log(receta.remindAtAddress);
+      const geo = await this.geoService.geocode(receta.remindAtAddress).then(r => {
+        console.log(r);
+        receta.remindAtGeo = `${r[0].y},${r[0].x}`;
+      });
+
+    }
     return this.recetaRepository.create(receta);
   }
 
@@ -54,7 +65,7 @@ export class RecetasController {
     responses: {
       '200': {
         description: 'Receta model count',
-        content: {'application/json': {schema: CountSchema}},
+        content: { 'application/json': { schema: CountSchema } },
       },
     },
   })
@@ -72,7 +83,7 @@ export class RecetasController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Receta, {includeRelations: true}),
+              items: getModelSchemaRef(Receta, { includeRelations: true }),
             },
           },
         },
@@ -89,7 +100,7 @@ export class RecetasController {
     responses: {
       '200': {
         description: 'Receta PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: { 'application/json': { schema: CountSchema } },
       },
     },
   })
@@ -97,7 +108,7 @@ export class RecetasController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Receta, {partial: true}),
+          schema: getModelSchemaRef(Receta, { partial: true }),
         },
       },
     })
@@ -113,7 +124,7 @@ export class RecetasController {
         description: 'Receta model instance',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(Receta, {includeRelations: true}),
+            schema: getModelSchemaRef(Receta, { includeRelations: true }),
           },
         },
       },
@@ -138,7 +149,7 @@ export class RecetasController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Receta, {partial: true}),
+          schema: getModelSchemaRef(Receta, { partial: true }),
         },
       },
     })

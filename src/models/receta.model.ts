@@ -12,6 +12,12 @@ export class Receta extends Entity {
     type: 'string',
     required: true,
   })
+  type: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
   autor: string;
 
   @property({
@@ -39,6 +45,16 @@ export class Receta extends Entity {
     type: 'string',
   })
   video?: any;
+
+  @property({
+    type: 'string',
+  })
+  remindAtAddress?: string; // address,city,zipcode
+
+  @property({
+    type: 'string',
+  })
+  remindAtGeo?: string; // latitude,longitude
 
   @property({
     type: 'string',

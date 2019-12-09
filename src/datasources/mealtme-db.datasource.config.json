@@ -1,11 +1,11 @@
 {
   "name": "mealtme_db",
   "connector": "mongodb",
-  "url": "mongodb://lb4:asd123@ds251158.mlab.com:51158/mealtime_db",
-  "host": "ds251158.mlab.com",
-  "port": 51158,
-  "user": "lb4",
-  "password": "asd123",
-  "database": "mealtime_db",
+  "url": "mongodb+srv://kevin:123@cluster0-9kwou.mongodb.net/desarrolloWeb?retryWrites=true&w=majority",
+  "host": "cluster0-9kwou.mongodb.net",
+  "port": 27017,
+  "user": "kevin",
+  "password": "123",
+  "database": "desarrolloWeb",
   "useNewUrlParser": true
 }
